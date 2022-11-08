@@ -13,6 +13,7 @@ struct MusicAlbum: Identifiable {
     var title: String
     var artist: String
     var id = UUID()
+    // forget to add dependecy injection
 }
 class ViewModel: ObservableObject
 {
@@ -25,12 +26,16 @@ class ViewModel: ObservableObject
         URLSession.shared.dataTaskPublisher(for: URL(string:
                                                         
                                                         "1979673067.rsc.cdn77.org/music-albums.json")!)
-        
+        //forgot to figure out the API Error by Enum 
+       
+  
         .map { $0.data }
         .decode(type: [MusicAlbum].self, decoder: JSONDecoder())
         .sink { completion in
+             //forgot to conditioning switch completion {.failure:.failure:}
             print(completion)
         } receiveValue: { albums in
+            // Forgot to call DispatchQueue.main.async {}
             self.albums = albums
         }
         
@@ -41,7 +46,7 @@ struct Albums: View
 {
     @ObservedObject var viewModel = ViewModel();
     @State var isLoading: Bool = false
-    var showDetailView: Bool = false
+    var showf: Bool = false
     var title: String?
     var body: some View {
         GeometryReader { proxy in
